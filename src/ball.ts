@@ -1,27 +1,47 @@
-import { CTX } from './main.ts';
+import { CANVAS, CTX } from './main.ts';
 import { CONFIG } from './config.ts';
 
 export class Ball {
+  public speed: number;
+  public shift_x: number;
+  public shift_y: number;
+
   constructor(
     public x: number,
     public y: number,
     public width: number,
     public height: number,
     public color: string,
+    public isControlled?: boolean,
   ) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.color = color;
+    this.isControlled = isControlled;
+    this.speed = CONFIG.DEFAULT_SPEED;
+    this.shift_x = 0;
+    this.shift_y = 0;
+
+    if (isControlled) {
+      this.bindControlKeys();
+    }
   }
 
-  stroke() {
+  bindControlKeys(): void {
+    CANVAS.addEventListener('mousemove', (event) => {
+      const { clientX, clientY } = event;
+      console.log(clientX, clientY);
+    });
+  }
+
+  stroke(): void {
     CTX.strokeStyle = CONFIG.STROKE_COLOR;
     CTX.strokeRect(this.x, this.y, this.width, this.height);
   }
 
-  fill() {
+  fill(): void {
     CTX.fillStyle = this.color;
     CTX.beginPath();
     CTX.arc(
@@ -35,8 +55,14 @@ export class Ball {
     CTX.fillStyle = CONFIG.DEFAULT_FILL_COLOR;
   }
 
-  draw() {
+  draw(): void {
+    this.move();
     this.stroke();
     this.fill();
+  }
+
+  move(): void {
+    this.x += this.shift_x;
+    this.y += this.shift_y;
   }
 }
