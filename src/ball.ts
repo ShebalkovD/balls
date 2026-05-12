@@ -31,8 +31,18 @@ export class Ball {
 
   bindControlKeys(): void {
     CANVAS.addEventListener('mousemove', (event) => {
-      const { clientX, clientY } = event;
-      console.log(clientX, clientY);
+      const { offsetX, offsetY } = event;
+      const dx = offsetX - (this.x + this.width / 2);
+      const dy = offsetY - (this.y + this.height / 2);
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      console.log(distance);
+      if (distance > this.width / 2) {
+        this.shift_x = (dx / distance) * this.speed;
+        this.shift_y = (dy / distance) * this.speed;
+      } else {
+        this.shift_x = 0;
+        this.shift_y = 0;
+      }
     });
   }
 
