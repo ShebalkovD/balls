@@ -51,13 +51,6 @@ export class Player extends Ball {
   }
 
   move(): void {
-    // Ограничение движения по границам canvas
-    if (this.x <= 0 && this.shiftX < 0) this.shiftX = 0;
-    if (this.x >= CANVAS.width - this.width && this.shiftX > 0) this.shiftX = 0;
-    if (this.y <= 0 && this.shiftY < 0) this.shiftY = 0;
-    if (this.y >= CANVAS.height - this.height && this.shiftY > 0)
-      this.shiftY = 0;
-
     // Остановка при достижении курсора
     const center = { x: this.x + this.width / 2, y: this.y + this.height / 2 };
     const centerDeadZone = 5;
