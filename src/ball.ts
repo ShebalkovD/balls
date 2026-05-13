@@ -45,6 +45,10 @@ export class Ball {
         this.shiftY = 0;
       }
     });
+    CANVAS.addEventListener('mouseleave', () => {
+      this.shiftX = 0;
+      this.shiftY = 0;
+    });
   }
 
   stroke(): void {
