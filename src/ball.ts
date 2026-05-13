@@ -6,6 +6,8 @@ export class Ball {
   public shiftX: number;
   public shiftY: number;
 
+  public lineWidth: number;
+
   constructor(
     public x: number,
     public y: number,
@@ -23,6 +25,8 @@ export class Ball {
     this.speed = CONFIG.DEFAULT_SPEED;
     this.shiftX = 0;
     this.shiftY = 0;
+
+    this.lineWidth = 1;
 
     if (isControlled) {
       this.bindControlKeys();
@@ -71,9 +75,20 @@ export class Ball {
   }
 
   draw(): void {
+    this.clear();
     this.move();
     this.stroke();
     this.fill();
+  }
+
+  clear(): void {
+    const lw = this.lineWidth;
+    CTX.clearRect(
+      this.x - lw,
+      this.y - lw,
+      this.width + lw * 2,
+      this.height + lw * 2,
+    );
   }
 
   move(): void {
