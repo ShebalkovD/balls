@@ -42,8 +42,18 @@ export class Ball {
       const deadZone = this.width / 5;
 
       if (distance > deadZone) {
-        this.shiftX = (dx / distance) * this.speed;
-        this.shiftY = (dy / distance) * this.speed;
+        const newPosition = {
+          x: (dx / distance) * this.speed,
+          y: (dy / distance) * this.speed,
+        };
+        //
+        // const distanceFromLeft = Math.abs(0 - this.x);
+        // if (newPosition.x < 0 && Math.abs(newPosition.x) > distanceFromLeft) {
+        //   newPosition.x = distanceFromLeft;
+        // }
+
+        this.shiftX = newPosition.x;
+        this.shiftY = newPosition.y;
       } else {
         this.shiftX = 0;
         this.shiftY = 0;
@@ -92,6 +102,13 @@ export class Ball {
   }
 
   move(): void {
+    // Ограничение движения по границам canvas
+    if (this.x <= 0 && this.shiftX < 0) this.shiftX = 0;
+    if (this.x >= CANVAS.width - this.width && this.shiftX > 0) this.shiftX = 0;
+    if (this.y <= 0 && this.shiftY < 0) this.shiftY = 0;
+    if (this.y >= CANVAS.height - this.height && this.shiftY > 0)
+      this.shiftY = 0;
+
     this.x += this.shiftX;
     this.y += this.shiftY;
   }
