@@ -2,6 +2,7 @@ import './style.css';
 import { CONFIG } from './config.ts';
 import { Player } from './player.ts';
 import type { Ball } from './ball.ts';
+import { Enemy } from './enemy.ts';
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 <canvas id="canvas" width="${CONFIG.CANVAS_WIDTH}" height="${CONFIG.CANVAS_HEIGHT}"></canvas>
@@ -19,7 +20,7 @@ const player = new Player(
   'white',
 );
 
-const enemy = new Player(
+const enemy = new Enemy(
   CONFIG.CANVAS_WIDTH / 2 + 100,
   CONFIG.CANVAS_HEIGHT / 2 + 100,
   60,
@@ -27,10 +28,14 @@ const enemy = new Player(
   'orange',
 );
 
+enemy.initRandomDirection();
+
 setInterval(() => {
   player.clear();
   player.move();
   player.draw();
 
+  enemy.clear();
+  enemy.move();
   enemy.draw();
 }, CONFIG.FRAME_TIME);
