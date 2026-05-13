@@ -19,8 +19,18 @@ const player = new Player(
   'white',
 );
 
+const enemy = new Player(
+  CONFIG.CANVAS_WIDTH / 2 + 100,
+  CONFIG.CANVAS_HEIGHT / 2 + 100,
+  60,
+  60,
+  'orange',
+);
+
 setInterval(() => {
   player.clear();
   player.move();
   player.draw();
+
+  enemy.draw();
 }, CONFIG.FRAME_TIME);
