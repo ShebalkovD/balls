@@ -1,7 +1,8 @@
-import { CTX } from './main.ts';
+import { BALLS, CTX } from './main.ts';
 import { CONFIG } from './config.ts';
 
 export class Ball {
+  public id: number;
   public speed: number;
   public shiftX: number;
   public shiftY: number;
@@ -15,6 +16,7 @@ export class Ball {
     public height: number,
     public color: string,
   ) {
+    this.id = BALLS.length + 1;
     this.x = x;
     this.y = y;
     this.width = width;
@@ -25,6 +27,7 @@ export class Ball {
     this.shiftY = 0;
 
     this.lineWidth = 1;
+    BALLS.push(this);
   }
 
   stroke(): void {
