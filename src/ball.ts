@@ -3,8 +3,8 @@ import { CONFIG } from './config.ts';
 
 export class Ball {
   public speed: number;
-  public shift_x: number;
-  public shift_y: number;
+  public shiftX: number;
+  public shiftY: number;
 
   constructor(
     public x: number,
@@ -21,8 +21,8 @@ export class Ball {
     this.color = color;
     this.isControlled = isControlled;
     this.speed = CONFIG.DEFAULT_SPEED;
-    this.shift_x = 0;
-    this.shift_y = 0;
+    this.shiftX = 0;
+    this.shiftY = 0;
 
     if (isControlled) {
       this.bindControlKeys();
@@ -35,13 +35,14 @@ export class Ball {
       const dx = offsetX - (this.x + this.width / 2);
       const dy = offsetY - (this.y + this.height / 2);
       const distance = Math.sqrt(dx * dx + dy * dy);
-      console.log(distance);
-      if (distance > this.width / 2) {
-        this.shift_x = (dx / distance) * this.speed;
-        this.shift_y = (dy / distance) * this.speed;
+      const deadZone = this.width / 5;
+
+      if (distance > deadZone) {
+        this.shiftX = (dx / distance) * this.speed;
+        this.shiftY = (dy / distance) * this.speed;
       } else {
-        this.shift_x = 0;
-        this.shift_y = 0;
+        this.shiftX = 0;
+        this.shiftY = 0;
       }
     });
   }
@@ -72,7 +73,7 @@ export class Ball {
   }
 
   move(): void {
-    this.x += this.shift_x;
-    this.y += this.shift_y;
+    this.x += this.shiftX;
+    this.y += this.shiftY;
   }
 }

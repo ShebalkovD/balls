@@ -2,7 +2,7 @@ export const CONFIG = {
   CANVAS_HEIGHT: 600,
   CANVAS_WIDTH: 600,
 
-  DEFAULT_SPEED: 5,
+  DEFAULT_SPEED: 3,
   FRAME_TIME: 20,
 
   STROKE_COLOR: 'red',
