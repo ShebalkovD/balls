@@ -5,6 +5,8 @@ export class Ball {
   public speed: number;
   public shiftX: number;
   public shiftY: number;
+  public cursorX: number;
+  public cursorY: number;
 
   public lineWidth: number;
 
@@ -25,6 +27,8 @@ export class Ball {
     this.speed = CONFIG.DEFAULT_SPEED;
     this.shiftX = 0;
     this.shiftY = 0;
+    this.cursorX = 0;
+    this.cursorY = 0;
 
     this.lineWidth = 1;
 
@@ -36,6 +40,10 @@ export class Ball {
   bindControlKeys(): void {
     CANVAS.addEventListener('mousemove', (event) => {
       const { offsetX, offsetY } = event;
+
+      this.cursorX = offsetX;
+      this.cursorY = offsetY;
+
       const dx = offsetX - (this.x + this.width / 2);
       const dy = offsetY - (this.y + this.height / 2);
       const distance = Math.sqrt(dx * dx + dy * dy);
@@ -46,11 +54,6 @@ export class Ball {
           x: (dx / distance) * this.speed,
           y: (dy / distance) * this.speed,
         };
-        //
-        // const distanceFromLeft = Math.abs(0 - this.x);
-        // if (newPosition.x < 0 && Math.abs(newPosition.x) > distanceFromLeft) {
-        //   newPosition.x = distanceFromLeft;
-        // }
 
         this.shiftX = newPosition.x;
         this.shiftY = newPosition.y;
@@ -109,6 +112,23 @@ export class Ball {
     if (this.y >= CANVAS.height - this.height && this.shiftY > 0)
       this.shiftY = 0;
 
+    // Остановка при достижении курсора
+    const center = { x: this.x + this.width / 2, y: this.y + this.height / 2 };
+    const centerDeadZone = 5;
+
+    if (
+      this.cursorX >= center.x - centerDeadZone &&
+      this.cursorX <= center.x + centerDeadZone
+    )
+      this.shiftX = 0;
+
+    if (
+      this.cursorY >= center.y - centerDeadZone &&
+      this.cursorY <= center.y + centerDeadZone
+    )
+      this.shiftY = 0;
+
+    // Шаг
     this.x += this.shiftX;
     this.y += this.shiftY;
   }
