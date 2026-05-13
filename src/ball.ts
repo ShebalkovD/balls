@@ -60,4 +60,9 @@ export class Ball {
       this.height + lw * 2,
     );
   }
+
+  step() {
+    this.x += this.shiftX;
+    this.y += this.shiftY;
+  }
 }

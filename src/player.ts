@@ -75,7 +75,6 @@ export class Player extends Ball {
       this.shiftY = 0;
 
     // Шаг
-    this.x += this.shiftX;
-    this.y += this.shiftY;
+    this.step();
   }
 }
