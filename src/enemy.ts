@@ -29,9 +29,10 @@ export class Enemy extends Ball {
   }
 
   initRandomDirection() {
+    const delay = 1000 + this.width * 5;
     setInterval(() => {
       this.setRandomDirection();
-    }, 1000);
+    }, delay);
   }
 
   move() {
