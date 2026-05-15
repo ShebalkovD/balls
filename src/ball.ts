@@ -65,6 +65,14 @@ export class Ball {
   }
 
   step() {
+    // Ограничение движения по границам canvas
+    if (this.x <= 0 && this.shiftX < 0) this.shiftX = 0;
+    if (this.x >= CONFIG.CANVAS_WIDTH - this.width && this.shiftX > 0)
+      this.shiftX = 0;
+    if (this.y <= 0 && this.shiftY < 0) this.shiftY = 0;
+    if (this.y >= CONFIG.CANVAS_HEIGHT - this.height && this.shiftY > 0)
+      this.shiftY = 0;
+
     this.x += this.shiftX;
     this.y += this.shiftY;
   }
