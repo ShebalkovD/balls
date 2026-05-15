@@ -6,6 +6,7 @@ import { BALLS } from './main.ts';
 export class Enemy extends Ball {
   public dx: number;
   public dy: number;
+  private randomMoveIntervalId: number | null;
 
   constructor(
     public x: number,
@@ -17,6 +18,7 @@ export class Enemy extends Ball {
     super(x, y, width, height, color);
     this.dx = 0;
     this.dy = 0;
+    this.randomMoveIntervalId = null;
   }
 
   setRandomDirection() {
@@ -31,7 +33,7 @@ export class Enemy extends Ball {
 
   initRandomDirection() {
     const delay = 1000 + this.width * 5;
-    setInterval(() => {
+    this.randomMoveIntervalId = setInterval(() => {
       this.setRandomDirection();
     }, delay);
   }
@@ -86,6 +88,42 @@ export class Enemy extends Ball {
     return distance;
   }
 
+  moveFrom(ball: Ball) {
+    const centerX = ball.x + ball.width / 2;
+    const centerY = ball.y + ball.height / 2;
+    const vector = this.getVector(centerX, centerY);
+
+    const distance = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+
+    if (distance > 0) {
+      const newPosition = {
+        x: (vector.x / distance) * this.speed * -1,
+        y: (vector.y / distance) * this.speed * -1,
+      };
+
+      this.shiftX = newPosition.x;
+      this.shiftY = newPosition.y;
+    }
+  }
+
+  moveTo(ball: Ball) {
+    const centerX = ball.x + ball.width / 2;
+    const centerY = ball.y + ball.height / 2;
+    const vector = this.getVector(centerX, centerY);
+
+    const distance = Math.sqrt(vector.x * vector.x + vector.y * vector.y);
+
+    if (distance > 0) {
+      const newPosition = {
+        x: (vector.x / distance) * this.speed,
+        y: (vector.y / distance) * this.speed,
+      };
+
+      this.shiftX = newPosition.x;
+      this.shiftY = newPosition.y;
+    }
+  }
+
   move() {
     const distance = Math.sqrt(this.dx * this.dx + this.dy * this.dy);
 
@@ -102,14 +140,28 @@ export class Enemy extends Ball {
       this.shiftY = 0;
     }
 
-    this.step();
-
     const nearestBall = this.findNearestBall();
     if (nearestBall) {
-      if (nearestBall.width > this.width) this.strokeColor = 'blue';
-      if (nearestBall.width < this.width) this.strokeColor = 'red';
+      if (this.randomMoveIntervalId) {
+        clearInterval(this.randomMoveIntervalId);
+        this.randomMoveIntervalId = null;
+      }
+
+      if (nearestBall.width > this.width) {
+        this.strokeColor = 'blue';
+        this.moveFrom(nearestBall);
+      }
+      if (nearestBall.width < this.width) {
+        this.strokeColor = 'red';
+        this.moveTo(nearestBall);
+      }
     } else {
+      if (!this.randomMoveIntervalId) {
+        this.initRandomDirection();
+      }
       this.strokeColor = CONFIG.STROKE_COLOR;
     }
+
+    this.step();
   }
 }

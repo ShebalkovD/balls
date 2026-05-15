@@ -8,5 +8,5 @@ export const CONFIG = {
   STROKE_COLOR: 'green',
   DEFAULT_FILL_COLOR: 'white',
 
-  FIND_DISTANCE: 200,
+  FIND_DISTANCE: 100,
 };

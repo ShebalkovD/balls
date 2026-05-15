@@ -23,7 +23,7 @@ export class Ball {
     this.width = width;
     this.height = height;
     this.color = color;
-    this.speed = CONFIG.DEFAULT_SPEED;
+    this.speed = CONFIG.DEFAULT_SPEED - this.width * 0.01;
     this.shiftX = 0;
     this.shiftY = 0;
     this.strokeColor = CONFIG.STROKE_COLOR;
