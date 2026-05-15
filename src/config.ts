@@ -2,9 +2,11 @@ export const CONFIG = {
   CANVAS_HEIGHT: 600,
   CANVAS_WIDTH: 600,
 
-  DEFAULT_SPEED: 3,
+  DEFAULT_SPEED: 1,
   FRAME_TIME: 20,
 
-  STROKE_COLOR: 'red',
+  STROKE_COLOR: 'green',
   DEFAULT_FILL_COLOR: 'white',
+
+  FIND_DISTANCE: 200,
 };

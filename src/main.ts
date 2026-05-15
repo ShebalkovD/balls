@@ -20,33 +20,33 @@ export const BALLS: Array<Player | Enemy | Ball> = [];
 //   'white',
 // );
 
-const enemy = new Enemy(
+new Enemy(
   CONFIG.CANVAS_WIDTH / 2 + 100,
   CONFIG.CANVAS_HEIGHT / 2 + 100,
   20,
   20,
-  'orange',
+  'white',
 );
 
-const enemy2 = new Enemy(
+new Enemy(
   CONFIG.CANVAS_WIDTH / 2 - 100,
   CONFIG.CANVAS_HEIGHT / 2 - 100,
   40,
   40,
-  'green',
+  'white',
 );
 
-const enemy3 = new Enemy(
+new Enemy(
   CONFIG.CANVAS_WIDTH / 2 - 100,
   CONFIG.CANVAS_HEIGHT / 2 - 100,
   120,
   120,
-  'blue',
+  'white',
 );
 
-enemy.initRandomDirection();
-enemy2.initRandomDirection();
-enemy3.initRandomDirection();
+BALLS.forEach((ball) => {
+  if (ball instanceof Enemy) ball.initRandomDirection();
+});
 
 setInterval(() => {
   BALLS.forEach((ball) => {

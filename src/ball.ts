@@ -6,6 +6,7 @@ export class Ball {
   public speed: number;
   public shiftX: number;
   public shiftY: number;
+  public strokeColor: string;
 
   public lineWidth: number;
 
@@ -25,13 +26,14 @@ export class Ball {
     this.speed = CONFIG.DEFAULT_SPEED;
     this.shiftX = 0;
     this.shiftY = 0;
+    this.strokeColor = CONFIG.STROKE_COLOR;
 
     this.lineWidth = 1;
     BALLS.push(this);
   }
 
   stroke(): void {
-    CTX.strokeStyle = CONFIG.STROKE_COLOR;
+    CTX.strokeStyle = this.strokeColor;
     CTX.strokeRect(this.x, this.y, this.width, this.height);
   }
 
